@@ -3,11 +3,11 @@ import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
 import Button from "react-bootstrap/Button";
 
-class Login extends Component{
+class Signup extends Component{
 
-    signin(values){
-        fetch('http://localhost:4011/login',{
-            method:'GET',
+    signup(values){
+        fetch('http://localhost:4011/signup',{
+            method:'POST',
             body:values
         });
     }
@@ -16,7 +16,7 @@ class Login extends Component{
             <Form inline>
                 <FormControl type="text" placeholder="Username" className="mr-sm-2" />
                 <FormControl type="password" placeholder="Password" className="mr-sm-2" />
-                <Button id="signInBtn" onclick={this.signin(values)} variant="primary"> Sign In </Button>
+                <Button id="signUpBtn" onclick={this.signup(values)} variant="primary"> Sign Up </Button>
             </Form>
         );
     }

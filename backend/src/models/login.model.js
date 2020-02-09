@@ -6,5 +6,5 @@ let loginSchema = new Schema({
     password:{type:String,required:true}
 },{collection:"Users"});
 
-const login = mongoose.model('User',loginSchema);
-mongoose.exports = login;
+const loginModel = mongoose.model('Users',loginSchema);
+module.exports = loginModel;
