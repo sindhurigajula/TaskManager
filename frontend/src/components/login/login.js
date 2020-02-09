@@ -1,24 +1,17 @@
 import React, { Component } from 'react';
+import Form from "react-bootstrap/Form";
+import FormControl from "react-bootstrap/FormControl";
+import Button from "react-bootstrap/Button";
 
 class Login extends Component{
 
-    handleSubmit(values){
-        alert(values);
-    }
-    
     render(){
         return(
-            <Form onSubmit={(values)=>this.handleSubmit(values)}>
-                <div class="navbar">
-                    Login
-                    <p>Username:</p>
-                    <input type="text" />
-                    <p>Password</p>
-                    <input type="text" />
-                    
-                </div>
+            <Form inline>
+                <FormControl type="text" placeholder="Username" className="mr-sm-2" />
+                <FormControl type="password" placeholder="Password" className="mr-sm-2" />
+                <Button id="signInBtn" variant="primary"> Sign In </Button>
             </Form>
-
         );
     }
 }
