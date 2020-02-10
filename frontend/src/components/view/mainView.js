@@ -3,21 +3,25 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import NavBar from "../navbar/navbar";
 import Tasks from "../tasklist/taskList";
-import {initView} from "../../state/actions/actions"
+import TaskAdder from "../tasklist/taskAdder";
+import {initView} from "../../state/actions/actions";
+import Jumbotron from "react-bootstrap/Jumbotron";
+
 
 export class MainView extends Component {
 
     componentDidMount() {
-        console.log(this.props);
         this.props.initView();
     }
 
     render() {
-        console.log(this.props);
         return (
             <div className="MainView">
                 <NavBar />
-                <Tasks tasks={this.props.tasks}/>
+                <Jumbotron>
+                    <Tasks tasks={this.props.tasks}/>
+                    <TaskAdder />
+                </Jumbotron>
             </div>
         );
     }

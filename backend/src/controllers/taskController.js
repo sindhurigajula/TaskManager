@@ -23,8 +23,9 @@ exports.addTask = function(req,res){
 
 exports.getAllTasks = function(req,res){
 
-    req.params.username="sind";
+    // req.params.username="sind";
 
+    console.log(req.params.username);
     taskModel.find({username:req.params.username,"task.isDone":false})
     .then((response)=>res.send(response));
 };

@@ -4,40 +4,59 @@ import Container from 'react-bootstrap/Container'
 import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import FormControl from 'react-bootstrap/FormControl';
+import {completeTask} from "../../state/actions/actions";
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
 class Tasks extends Component{
 
     showTasks(tasks) {
+
+        console.log(tasks);
+
+        let taskIds = Object.keys(tasks);
         return (
-            tasks.map((task) => {
+            taskIds.map((key) => {
                 return (
-                    <Container>
-                        <Row >
-                            <Col>
-                                {task}
-                            </Col>
-                            <Col>
-                                <Button>Done</Button>
-                            </Col>
-                        </Row>
-                    </Container>
+                    <Row>
+                        <Col>
+                            {tasks[key].desc}
+                        </Col>
+                        <Col>
+                            <Button id={key} variant="success" onClick={() => this.props.completeTask(key)}>Complete</Button>
+                        </Col>
+                    </Row>
                 )
             })
         );
     }
-    
+
     render() {
         const { tasks } = this.props;
         return (
-            <Jumbotron>
+            <Container>
                 {
                     tasks.length === 0 ?
                     <div>No Tasks</div> :
                     this.showTasks(tasks)
                 }
-            </Jumbotron>
+            </Container>
         );
     }
 }
 
-export default Tasks;
+const mapStateToProps = (state) => {
+    return {
+        tasks: state.tasks
+    };
+};
+
+const mapDispatchToProps = (dispatch) => bindActionCreators(
+    {
+        completeTask
+    },
+    dispatch
+);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Tasks);

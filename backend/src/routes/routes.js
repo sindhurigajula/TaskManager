@@ -7,7 +7,7 @@ var task_controller = require("../controllers/taskController");
 });*/
 //router.get('/login', login_controller.validateLogin());
 router.get('/addtask',task_controller.addTask);
-router.get('/get',task_controller.getAllTasks);
+router.get('/get/:username',task_controller.getAllTasks);
 router.get('/deleteTask',task_controller.deleteTask);
 router.get('/updateTask',task_controller.updateTask);
 module.exports = router;
