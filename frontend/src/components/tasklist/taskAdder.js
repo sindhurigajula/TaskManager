@@ -11,20 +11,31 @@ class TaskAdder extends Component{
 
     render() {
         return (
+            this.props.userinfo && this.props.userinfo.username ?
             <Row>
                 <Col>
                     <FormControl id="newTaskInput" type="text"/>
                 </Col>
                 <Col>
-                    <Button id="newTaskBtn" variant="primary" onClick={ () => this.props.addTask(document.getElementById("newTaskInput").value)} >Add Task</Button>
+                    <Button 
+                    id="newTaskBtn" 
+                    variant="primary" 
+                    onClick={ () =>
+                    this.props.addTask(
+                        document.getElementById("newTaskInput").value,
+                        this.props.userinfo
+                    )} >Add Task</Button>
                 </Col>
             </Row>
+            :
+            <Row></Row>
         );
     }
 }
 
 const mapStateToProps = (state) => {
     return {
+        userinfo: state.userinfo
     };
 };
 

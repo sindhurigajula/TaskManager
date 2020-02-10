@@ -7,6 +7,8 @@ export default combineReducers({
                 return action.userinfo;
             case "SIGN_OUT":
                 return {};
+            case "INIT_VIEW":
+                return state;
             default:
                 return state;
         }

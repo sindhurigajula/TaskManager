@@ -19,8 +19,8 @@ export class MainView extends Component {
             <div className="MainView">
                 <NavBar userinfo={this.props.userinfo} />
                 <Jumbotron>
-                    <Tasks tasks={this.props.tasks}/>
-                    <TaskAdder />
+                    <Tasks tasks={this.props.tasks} userinfo={this.props.userinfo} />
+                    <TaskAdder userinfo={this.props.userinfo} />
                 </Jumbotron>
             </div>
         );

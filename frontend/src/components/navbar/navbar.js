@@ -10,11 +10,10 @@ import { connect } from 'react-redux';
 class NavBar extends Component {
 
     showLogin(userinfo) {
-        console.log(userinfo);
         return (
-            userinfo ?
+            userinfo && userinfo.username ?
                 <Form inline>
-                    {this.props.userinfo.username}
+                    <span id="usernameDisplay">{this.props.userinfo.username}</span>
                     <Button id="signOutBtn" variant="primary"
                     onClick={() => this.props.signout()} >
                         <b>Sign Out</b>

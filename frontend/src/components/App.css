@@ -40,3 +40,9 @@
 .row {
   padding: 10px;
 }
+
+#usernameDisplay {
+  padding-right: 20px;
+  font-size: xx-large;
+  color: white;
+}

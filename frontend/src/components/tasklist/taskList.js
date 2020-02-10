@@ -1,17 +1,15 @@
 import React, { Component } from 'react';
-import Jumbotron from 'react-bootstrap/Jumbotron';
 import Container from 'react-bootstrap/Container'
 import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import FormControl from 'react-bootstrap/FormControl';
 import {completeTask} from "../../state/actions/actions";
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 class Tasks extends Component{
 
-    showTasks(tasks) {
+    showTasks(tasks, userinfo) {
         let taskIds = Object.keys(tasks);
         return (
             taskIds.map((key) => {
@@ -21,7 +19,7 @@ class Tasks extends Component{
                             {tasks[key].task.taskdescription}
                         </Col>
                         <Col>
-                            <Button id={key} variant="success" onClick={() => this.props.completeTask(key)}>Complete</Button>
+                            <Button id={key} variant="success" onClick={() => this.props.completeTask(key, userinfo)}>Complete</Button>
                         </Col>
                     </Row>
                 )
@@ -30,13 +28,14 @@ class Tasks extends Component{
     }
 
     render() {
-        const { tasks } = this.props;
+        const { tasks, userinfo } = this.props;
+        console.log(this.props);
         return (
             <Container>
                 {
-                    tasks.length === 0 ?
+                    tasks.length === 0 || !(userinfo && userinfo.username)?
                     <div>No Tasks</div> :
-                    this.showTasks(tasks)
+                    this.showTasks(tasks, userinfo)
                 }
             </Container>
         );
@@ -45,7 +44,8 @@ class Tasks extends Component{
 
 const mapStateToProps = (state) => {
     return {
-        tasks: state.tasks
+        tasks: state.tasks,
+        userinfo: state.userinfo
     };
 };
 

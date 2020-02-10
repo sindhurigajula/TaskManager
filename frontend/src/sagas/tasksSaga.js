@@ -9,10 +9,10 @@ export default function* tasksSaga() {
     ]);
 }
 
-export function* initTasks() {
+export function* initTasks(action) {
     try{
         const appState = yield select();
-        const tasksServerResponse = yield call(getTasks);
+        const tasksServerResponse = yield call(getTasks,action.userinfo.username);
         let tasks = {};
         tasksServerResponse.forEach(element => {
             tasks[element.task.taskid] = element;
@@ -24,54 +24,44 @@ export function* initTasks() {
 }
 
 export function* completeTask(action) {
-    const {taskId} = action;
+    const {taskId, userinfo} = action;
     try {
-        const compTaskServerResponse = yield call(compTask, taskId);
-        const getTasksServerResponse = yield call(getTasks);
-        let tasks = {};
-        getTasksServerResponse.forEach(element => {
-            tasks[element.task.taskid] = element;
-        });
-        yield put(setTasks(tasks));
+        const compTaskServerResponse = yield call(compTask, taskId, userinfo);
+        yield* initTasks(action);
     } catch (error) {
         console.error("Failed Server Call", error);
     }
 }
 
 export function* addTask(action) {
-    const {taskDesc} = action;
+    const {taskDesc, userinfo} = action;
     try {
-        const addTaskServerResponse = yield call(callAddTask, taskDesc);
-        const getTasksServerResponse = yield call(getTasks);
-        let tasks = {};
-        getTasksServerResponse.forEach(element => {
-            tasks[element.task.taskid] = element;
-        });
-        yield put(setTasks(tasks));
+        const addTaskServerResponse = yield call(callAddTask, taskDesc, userinfo);
+        yield* initTasks(action);
     } catch (error) {
         console.error("Failed Server Call");
     }
 }
 
-const compTask = (taskId) => {
+const compTask = (taskId,userinfo) => {
     return FetchHandler.post("/updateTask", 
     {
-        username: "sindhu",
+        username: userinfo.username,
         taskid: taskId
     });
 }
 
-const callAddTask = (taskDesc) => {
+const callAddTask = (taskDesc, userinfo) => {
     return FetchHandler.post("/addtask", 
     {
-        username: "sindhu", 
+        username: userinfo.username, 
         taskdescription: taskDesc,
         isDone: false
     });
 }
 
-const getTasks = () => {
-    return FetchHandler.get("/get/sindhu");
+const getTasks = (username) => {
+    return FetchHandler.get("/get/"+username);
 }
 
 function setTasks(tasksServerResponse) {
