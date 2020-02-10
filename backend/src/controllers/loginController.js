@@ -5,7 +5,7 @@ var activeUSer;
 exports.validateLogin = function(req,res){
 
     req.params.username = 'sindhuri';
-    req.params.password = 'sin123';
+    req.params.password = 'sin@123';
     var currentuser;
 
     loginModel.findOne({username:req.params.username,password:req.params.password},function(err,response){
@@ -14,8 +14,8 @@ exports.validateLogin = function(req,res){
             console.log("user does not exist");
             res.send("user does not exist or wrong password");
         }else{
-                activeUSer = req.params.username;
-                res.send(currentuser.username+" is logged in");
+                //activeUSer = currentuser.username;
+                res.status(200).json({activeuser:currentuser.username});
         }
     });
 }
