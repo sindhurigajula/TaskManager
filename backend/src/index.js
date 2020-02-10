@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 var router = require('./routes/routes.js')
 var mongoose = require('mongoose');
+var bodyParser = require('body-parser');
 
  
 // Connection URL
@@ -15,6 +16,10 @@ mongoose.connect(url, function(err, db) {
   console.log("Connected successfully to server");
 });
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/',router);
+// app.use(express.json());
+// app.use(express.urlencoded)
 app.listen(4011);

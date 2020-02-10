@@ -10,8 +10,8 @@ class AppWrapper extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            userInfo: {},
-            tasks: []
+            userinfo: {},
+            tasks: {}
         };
     }
     

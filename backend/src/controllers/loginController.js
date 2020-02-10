@@ -4,18 +4,19 @@ var activeUSer;
 
 exports.validateLogin = function(req,res){
 
-    req.params.username = 'sindhuri';
-    req.params.password = 'sin@123';
-    var currentuser;
+    console.log(req.body);
 
-    loginModel.findOne({username:req.params.username,password:req.params.password},function(err,response){
-        currentuser=response;
-        if(!currentuser){
-            console.log("user does not exist");
-            res.send("user does not exist or wrong password");
+    loginModel.findOne({username:req.body.username,password:req.body.password},function(err,response){
+        if(!response){
+            console.log("user does not exist, creating new user and signing in");
+            const newuser = new loginModel({username:req.body.username,password:req.body.password});
+            newuser.save(function(err,user){
+                if(err) throw err;
+                console.log("user added");
+            });
+            res.send("New user"+newuser.username+"successfully signed up");
         }else{
-                //activeUSer = currentuser.username;
-                res.status(200).json({activeuser:currentuser.username});
+            res.status(200).json({activeuser:req.body.username});
         }
     });
 }

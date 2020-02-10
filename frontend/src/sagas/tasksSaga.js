@@ -12,9 +12,12 @@ export default function* tasksSaga() {
 export function* initTasks() {
     try{
         const appState = yield select();
-        console.log(appState);
         const tasksServerResponse = yield call(getTasks);
-        yield put(setTasks(tasksServerResponse));
+        let tasks = {};
+        tasksServerResponse.forEach(element => {
+            tasks[element.task.taskid] = element;
+        });
+        yield put(setTasks(tasks));
     } catch (error) {
         console.error("Failed Server Call", error);
     }
@@ -24,11 +27,12 @@ export function* completeTask(action) {
     const {taskId} = action;
     try {
         const compTaskServerResponse = yield call(compTask, taskId);
-        console.log(FetchHandler.resp);
-        delete FetchHandler.resp[compTaskServerResponse.taskId];
-        console.log(FetchHandler.resp);
         const getTasksServerResponse = yield call(getTasks);
-        yield put(setTasks(getTasksServerResponse));
+        let tasks = {};
+        getTasksServerResponse.forEach(element => {
+            tasks[element.task.taskid] = element;
+        });
+        yield put(setTasks(tasks));
     } catch (error) {
         console.error("Failed Server Call", error);
     }
@@ -38,27 +42,36 @@ export function* addTask(action) {
     const {taskDesc} = action;
     try {
         const addTaskServerResponse = yield call(callAddTask, taskDesc);
-        console.log(FetchHandler.resp);
-        FetchHandler.resp[addTaskServerResponse.taskId] = {taskDesc};
-        console.log(FetchHandler.resp);
         const getTasksServerResponse = yield call(getTasks);
-        console.log(getTasksServerResponse);
-        yield put(setTasks(getTasksServerResponse));
+        let tasks = {};
+        getTasksServerResponse.forEach(element => {
+            tasks[element.task.taskid] = element;
+        });
+        yield put(setTasks(tasks));
     } catch (error) {
         console.error("Failed Server Call");
     }
 }
 
 const compTask = (taskId) => {
-    return FetchHandler.post("http://localhost:4011/completeTask", {taskId});
+    return FetchHandler.post("/updateTask", 
+    {
+        username: "sindhu",
+        taskid: taskId
+    });
 }
 
 const callAddTask = (taskDesc) => {
-    return FetchHandler.post("http://localhost:4011/addTask", {taskDesc});
+    return FetchHandler.post("/addtask", 
+    {
+        username: "sindhu", 
+        taskdescription: taskDesc,
+        isDone: false
+    });
 }
 
 const getTasks = () => {
-    return FetchHandler.get("http://localhost:4011/get/sindhu");
+    return FetchHandler.get("/get/sindhu");
 }
 
 function setTasks(tasksServerResponse) {

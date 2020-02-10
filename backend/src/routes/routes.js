@@ -2,14 +2,11 @@ var express = require('express');
 var router = express.Router();
 var login_controller = require("../controllers/loginController");
 var task_controller = require("../controllers/taskController");
-/*router.get('/index', function(req, res){
-  res.json(res.json());
-});*/
-//router.get('/login', login_controller.validateLogin());
-router.get('/addtask',task_controller.addTask);
+
+router.post('/addtask',task_controller.addTask);
+router.post('/updateTask',task_controller.updateTask);
 router.get('/get/:username',task_controller.getAllTasks);
 router.get('/deleteTask',task_controller.deleteTask);
-router.get('/updateTask',task_controller.updateTask);
-router.get('/login',login_controller.validateLogin);
+router.post('/login',login_controller.validateLogin);
 router.get('/signup',login_controller.createUser);
 module.exports = router;

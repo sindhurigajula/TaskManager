@@ -12,7 +12,12 @@ export const addTask = (taskDesc) => ({
     taskDesc
 });
 
-export const validateLogin = (logindetails) =>({
+export const validateLogin = (userinfo) => ({
     type: "VALIDATE_LOGIN",
-    logindetails
+    userinfo
+})
+
+export const signout = () => ({
+    type: "SIGN_OUT",
+    userinfo: {}
 })

@@ -17,7 +17,7 @@ export class MainView extends Component {
     render() {
         return (
             <div className="MainView">
-                <NavBar />
+                <NavBar userinfo={this.props.userinfo} />
                 <Jumbotron>
                     <Tasks tasks={this.props.tasks}/>
                     <TaskAdder />
@@ -29,7 +29,7 @@ export class MainView extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        userInfo: state.userInfo,
+        userinfo: state.userinfo,
         tasks: state.tasks
     };
 };

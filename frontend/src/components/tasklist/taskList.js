@@ -12,16 +12,13 @@ import { connect } from 'react-redux';
 class Tasks extends Component{
 
     showTasks(tasks) {
-
-        console.log(tasks);
-
         let taskIds = Object.keys(tasks);
         return (
             taskIds.map((key) => {
                 return (
                     <Row>
                         <Col>
-                            {tasks[key].desc}
+                            {tasks[key].task.taskdescription}
                         </Col>
                         <Col>
                             <Button id={key} variant="success" onClick={() => this.props.completeTask(key)}>Complete</Button>

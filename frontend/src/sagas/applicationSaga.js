@@ -5,7 +5,7 @@ import loginSaga from "./loginSaga";
 function* watchAllSagas() {
     yield all ([
         tasksSaga(),
-        loginSaga()
+        loginSaga(),
     ]);
 }
 

@@ -1,7 +1,16 @@
 import { combineReducers } from "redux";
 
 export default combineReducers({
-    userInfo: (state={}, action) => {return state},
+    userinfo: (state={}, action) => {
+        switch(action.type) {
+            case "SET_USER":
+                return action.userinfo;
+            case "SIGN_OUT":
+                return {};
+            default:
+                return state;
+        }
+    },
     tasks: (state={}, action) => {
         switch(action.type) {
             case "SET_TASKS":

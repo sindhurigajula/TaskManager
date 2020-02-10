@@ -1,15 +1,3 @@
-export let resp = {
-    "TaskId1": {
-        desc: "Task Description 1"
-    }, 
-    "TaskId2": {
-        desc: "Task Description 2"
-    }, 
-    "TaskId3": {
-        desc: "Task Description 3"
-    }
-};
-
 export const get = (url) => {
     const request = new Request(url, {
         credentials: 'include',
@@ -17,28 +5,38 @@ export const get = (url) => {
         headers: {'Access-Control-Allow-Origin': '*'}
     });
 
-    return makeRequest(request);
+    return makeGetRequest(request);
 }
 
 export const post = (url, body) => {
     const request = new Request( url, {
-        body: JSON.stringify(body),
-        credentials: 'include',
         method: 'post',
-        headers: {'content-type': 'application/json'}
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(body)
     });
-
+    console.log(body);
+    
     return makeRequest(request);
-    // return {
-    //     taskId: "TaskId4"
-    // }
+}
+
+const makeGetRequest = (request) => {
+    return fetch(request)
+    .then((response) => {
+        console.log(response);
+        if(response.ok) {
+            return response.json();
+        } else {
+            return Promise.reject("Failed to Fetch: " + response.statusText);
+        }
+    });
 }
 
 const makeRequest = (request) => {
-    return fetch(request, {mode: 'no-cors'})
+    return fetch(request)
     .then((response) => {
+        console.log(response);
         if(response.ok) {
-            return response.json();
+            return response.status;
         } else {
             return Promise.reject("Failed to Fetch: " + response.statusText);
         }

@@ -2,41 +2,48 @@ import React, { Component } from 'react';
 import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
 import Button from "react-bootstrap/Button";
-import {validateLogin} from "../../state/actions/actions";
+import {validateLogin, signout} from "../../state/actions/actions";
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 
 class Login extends Component{
 
-    handleInputChange(event){
-        if(!event.target.value){
-            err = "Username cannot be empty";
-        }
-    }
-    handleInputChange2(event){
-        if(!event.target.value){
-            err = "Password cannot be empty";
-        }
-    }
     render(){
         return(
+            this.props.userinfo ?
             <Form inline>
-                <FormControl type="text" placeholder="Username" className="mr-sm-2" onChange={(e) => this.handleInputChange(e)} />
-                <FormControl type="password" placeholder="Password" className="mr-sm-2" onChange={(e) => this.handleInputChange2(e)} />
-                <Button id="signInBtn" variant="primary"> Sign In </Button>
+                <FormControl id="usernameInput" type="text" placeholder="Username" className="mr-sm-2" />
+                <FormControl id="passwordInput" type="password" placeholder="Password" className="mr-sm-2" />
+                <Button id="signInBtn" variant="primary"
+                onClick={() => this.props.validateLogin({
+                    username: document.getElementById("usernameInput").value,
+                    password: document.getElementById("passwordInput").value
+                })} >
+                    <b>Sign In / Sign Up</b>
+                </Button>
+            </Form>
+            :
+            <Form inline>
+                {this.props.userinfo.username}
+                <Button id="signOutBtn" variant="primary"
+                onClick={() => this.props.signout()} >
+                    <b>Sign Out</b>
+                </Button>
             </Form>
         );
     }
 }
 const mapStateToProps = (state) => {
     return {
+        userinfo: state.userinfo
     };
 };
 
 const mapDispatchToProps = (dispatch) => bindActionCreators(
     {
-        validateLogin
+        validateLogin,
+        signout
     },
     dispatch
 );
