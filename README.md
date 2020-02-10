@@ -13,7 +13,7 @@ MERN Stack Todo List App
 1. Open browser and navigate to `localhost:3000/todo`
 
 
-## How it use
+## How to use
 1. Upon opening the page, you will see login option in the navbar
 1. Enter credentials, 
     1. if the username and password exists it will signin 
